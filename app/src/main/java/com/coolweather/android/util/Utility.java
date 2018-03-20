@@ -42,15 +42,15 @@ public class Utility {
      * 解析和处理服务器返回的市级数据
      *
      * */
-    public static boolean handleCityResponse(String response,int cityId){
+    public static boolean handleCountyResponse(String response,int cityId){
 
         if(!TextUtils.isEmpty(response)) try {
             JSONArray allCountries = new JSONArray(response);
             for (int i = 0; i < allCountries.length(); i++) {
-                JSONObject countryObject = allCountries.getJSONObject(i);
+                JSONObject countyObject = allCountries.getJSONObject(i);
                 County county = new County();
-                county.setCountyName(countryObject.getString("name"));
-                county.setWeatherId(countryObject.getString("id"));
+                county.setCountyName(countyObject.getString("name"));
+                county.setWeatherId(countyObject.getString("id"));
                 county.setCityId(cityId);
                 county.save();
             }
@@ -65,7 +65,7 @@ public class Utility {
      * 解析和处理服务器返回的县级数据
      *
      * */
-    public static boolean handleCountryResponse(String response,int prvinceId){
+    public static boolean handleCityResponse(String response,int prvinceId){
 
         if(!TextUtils.isEmpty(response)) try {
             JSONArray allCities = new JSONArray(response);
