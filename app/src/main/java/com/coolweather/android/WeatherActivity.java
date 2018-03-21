@@ -4,15 +4,16 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coolweather.android.gson.Forecast;
+import com.coolweather.android.gson.Suggestion;
 import com.coolweather.android.gson.Weather;
 import com.coolweather.android.util.HttpUtil;
 import com.coolweather.android.util.Utility;
@@ -80,7 +81,7 @@ public class WeatherActivity extends AppCompatActivity {
     * */
     public void requestWeather(final String weatherId){
 
-        String weatherUrl = "https://api.heweather.com/s6/weather?cityid="+weatherId+"&key=33ac70fd05ba4ef49c92f798d9b760b9";
+        String weatherUrl = "https://free-api.heweather.com/s6/weather?location="+weatherId+"&key=33ac70fd05ba4ef49c92f798d9b760b9";
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -89,7 +90,7 @@ public class WeatherActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(WeatherActivity.this,"获取天气信息失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WeatherActivity.this,"网络获取天气信息失败",Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -99,6 +100,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                 final String responseText = response.body().string();
                 final Weather weather = Utility.handleWeatherResponse(responseText);
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -108,7 +110,7 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.apply();
                             showWeatherInfo(weather);
                         }else {
-                            Toast.makeText(WeatherActivity.this,"获取天气信息失败",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(WeatherActivity.this,"返回天气信息失败",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -123,9 +125,9 @@ public class WeatherActivity extends AppCompatActivity {
     private void showWeatherInfo(Weather weather){
 
         String cityName = weather.basic.cityName;
-        String updateTime = weather.basic.update.updateTime.split(" ")[1];
+        String updateTime = weather.update.updateTime.split(" ")[1];
         String degree = weather.now.temperature+"℃";
-        String weatherInfo = weather.now.more.info;
+        String weatherInfo = weather.now.condInfo;
         titleCity.setText(cityName);
         titleUpdateTime.setText(updateTime);
         degreeText.setText(degree);
@@ -138,20 +140,23 @@ public class WeatherActivity extends AppCompatActivity {
             TextView maxText = view.findViewById(R.id.max_text);
             TextView minText = view.findViewById(R.id.min_text);
             dateText.setText(forecast.date);
-            infoText.setText(forecast.more.info);
-            maxText.setText(forecast.temperature.max);
-            minText.setText(forecast.temperature.min);
+            infoText.setText(forecast.cond_txt_n);
+            maxText.setText(forecast.tmp_max);
+            minText.setText(forecast.tmp_min);
             forecastLayout.addView(view);
         }
-        if(weather.aqi != null){
-
-            aqiText.setText(weather.aqi.city.aqi);
-            pm25Text.setText(weather.aqi.city.pm25);
-
+        String comfort="";
+        String sport="";
+        String carWash="";
+        for (Suggestion suggestion:weather.suggestionList){
+            if ("comf".equals(suggestion.type) ) {
+                comfort = "" + suggestion.suggestion;
+            }else if ("cw".equals(suggestion.type)){
+                carWash = "" + suggestion.suggestion;
+            }else if("sport".equals(suggestion.type)){
+                sport = "" + suggestion.suggestion;
+            }
         }
-        String comfort = "" + weather.suggestion.comfort.info;
-        String carWash = "" + weather.suggestion.carWash.info;
-        String sport = "" + weather.suggestion.sport.info;
         comfortText.setText(comfort);
         carWashText.setText(carWash);
         sportText.setText(sport);
