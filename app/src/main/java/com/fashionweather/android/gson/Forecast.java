@@ -1,6 +1,4 @@
-package com.coolweather.android.gson;
-
-import com.google.gson.annotations.SerializedName;
+package com.fashionweather.android.gson;
 
 /**
  * Created by Administrator on 2018/3/20 0020.

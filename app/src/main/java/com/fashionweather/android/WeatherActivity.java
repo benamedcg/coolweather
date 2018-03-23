@@ -1,4 +1,4 @@
-package com.coolweather.android;
+package com.fashionweather.android;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -17,12 +16,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.coolweather.android.gson.Forecast;
-import com.coolweather.android.gson.Suggestion;
-import com.coolweather.android.gson.Weather;
-import com.coolweather.android.service.AutoUpdateService;
-import com.coolweather.android.util.HttpUtil;
-import com.coolweather.android.util.Utility;
+import com.fashionweather.android.gson.Forecast;
+import com.fashionweather.android.gson.Suggestion;
+import com.fashionweather.android.gson.Weather;
+import com.fashionweather.android.service.AutoUpdateService;
+import com.fashionweather.android.util.HttpUtil;
+import com.fashionweather.android.util.Utility;
 
 import java.io.IOException;
 

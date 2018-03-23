@@ -1,4 +1,4 @@
-package com.coolweather.android;
+package com.fashionweather.android;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,12 +15,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.coolweather.android.R;
-import com.coolweather.android.db.City;
-import com.coolweather.android.db.County;
-import com.coolweather.android.db.Province;
-import com.coolweather.android.util.HttpUtil;
-import com.coolweather.android.util.Utility;
+import com.fashionweather.android.db.City;
+import com.fashionweather.android.db.County;
+import com.fashionweather.android.db.Province;
+import com.fashionweather.android.util.HttpUtil;
+import com.fashionweather.android.util.Utility;
 
 import org.litepal.crud.DataSupport;
 
@@ -55,7 +54,7 @@ public class ChooseAreaFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
 
         View view =inflater.inflate(R.layout.choose_area,container,false);
         titleText = view.findViewById(R.id.title_text);
